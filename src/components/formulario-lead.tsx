@@ -102,6 +102,15 @@ export function FormularioLead() {
                 for (const chave of ["utm_source", "utm_medium", "utm_campaign"]) {
                   dados.set(chave, url.searchParams.get(chave) ?? "");
                 }
+                // Sem UTM no link: usa o site de onde a pessoa veio, ou "direto".
+                if (!dados.get("utm_source")) {
+                  let origem = "direto";
+                  try {
+                    const ref = new URL(document.referrer);
+                    if (ref.host !== url.host) origem = ref.hostname.replace(/^(www|l|m|lm)\./, "");
+                  } catch {}
+                  dados.set("utm_source", origem);
+                }
                 dados.set("pagina", url.href);
                 startTransition(() => acao(dados));
               }}
