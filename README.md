@@ -27,18 +27,12 @@ Cada lead guarda `utm_source`, `utm_medium` e `utm_campaign`. Use links como
 
 ### Planilha do Google como destino (opção gratuita)
 
-Numa planilha, abra Extensões > Apps Script, cole o código abaixo e publique como "App da Web" com acesso para "Qualquer pessoa". A URL gerada é o `LEAD_WEBHOOK_URL`.
+O script da planilha está em `scripts/planilha-leads.gs`. Ele grava cada lead, cria o link "Chamar no WhatsApp" com mensagem pronta para o responsável e, quando alguém preenche "Data da visita", cria o evento no Google Agenda (mudar a data move o evento; apagar a data remove).
 
-```js
-function doPost(e) {
-  const d = JSON.parse(e.postData.contents);
-  SpreadsheetApp.getActiveSheet().appendRow([
-    d.criadoEm, d.responsavel, d.telefone, d.aluno, d.segmento, d.unidade,
-    d.mensagem, d.origem.utm_source, d.origem.utm_campaign,
-  ]);
-  return ContentService.createTextOutput("ok");
-}
-```
+1. Na planilha: Extensões > Apps Script, apague o conteúdo e cole o arquivo inteiro.
+2. Em Configurações do projeto, deixe o fuso horário como `(GMT-03:00) São Paulo`. Na planilha, Arquivo > Configurações > Localidade: Brasil.
+3. Escolha a função `instalar` e clique em Executar. Autorize o acesso à planilha e ao Google Agenda.
+4. Implantar > Gerenciar implantações > editar (lápis) > Versão: Nova versão > Implantar. O link do app da Web continua o mesmo.
 
 ## Publicar
 
