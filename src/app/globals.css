@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
+/*
+  Paleta tirada da marca: o roxo do uniforme e o âmbar do selo de 25 anos.
+  O fundo claro puxa levemente para o lilás, sem cair no bege.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ameixa-950: #170a24;
+  --ameixa-900: #24103a;
+  --ameixa-800: #36185a;
+  --roxo-600: #6a2fa3;
+  --roxo-500: #8344c4;
+  --roxo-100: #ece4f6;
+  --ambar-400: #f6b631;
+  --ambar-300: #ffcd5e;
+  --papel: #f8f6fb;
+  --tinta: #1b1424;
+  --tinta-suave: #5b5068;
+  --linha: #e1d9ea;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ameixa-950: var(--ameixa-950);
+  --color-ameixa-900: var(--ameixa-900);
+  --color-ameixa-800: var(--ameixa-800);
+  --color-roxo-600: var(--roxo-600);
+  --color-roxo-500: var(--roxo-500);
+  --color-roxo-100: var(--roxo-100);
+  --color-ambar-400: var(--ambar-400);
+  --color-ambar-300: var(--ambar-300);
+  --color-papel: var(--papel);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --color-linha: var(--linha);
+  --font-sans: var(--font-corpo);
+  --font-display: var(--font-titulo);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--font-corpo), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ambar-300);
+  color: var(--ameixa-950);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ambar-400);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Única animação orquestrada da página: a abertura do hero. */
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aproximar {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.entrada {
+  animation: subir 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--atraso, 0ms);
+}
+
+.hero-foto {
+  animation: aproximar 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
